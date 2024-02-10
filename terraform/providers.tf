@@ -1,3 +1,7 @@
+########################################################################
+#       Providers
+########################################################################
+
 terraform {
   required_providers {
     aws = {
@@ -5,7 +9,7 @@ terraform {
       version = "~> 5.36.0"
     }
     kubernetes = {
-      source = "hashicorp/kubernetes"
+      source  = "hashicorp/kubernetes"
       version = "~> 2.25.0"
     }
   }
@@ -14,6 +18,28 @@ terraform {
 
 provider "aws" {
   region     = var.aws_regions[0]
+  access_key = var.aws_access_key
+  secret_key = var.aws_secret_key
+
+  default_tags {
+    tags = local.tags
+  }
+}
+
+provider "aws" {
+  alias      = "primary"
+  region     = var.aws_regions[0]
+  access_key = var.aws_access_key
+  secret_key = var.aws_secret_key
+
+  default_tags {
+    tags = local.tags
+  }
+}
+
+provider "aws" {
+  alias      = "secondary"
+  region     = var.aws_regions[1]
   access_key = var.aws_access_key
   secret_key = var.aws_secret_key
 
