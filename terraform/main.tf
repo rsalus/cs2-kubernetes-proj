@@ -21,3 +21,11 @@ terraform {
 ########################################################################
 
 data "aws_caller_identity" "current" {}
+
+data "aws_eks_cluster" "cs2_cluster" {
+  name = "cs2"
+}
+
+data "aws_eks_cluster_auth" "cs2_cluster_auth" {
+  name = "cs2"
+}
