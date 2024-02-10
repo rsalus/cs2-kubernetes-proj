@@ -3,21 +3,17 @@
 ########################################################################
 
 terraform {
-  /*  Backend Configuration for Terraform Cloud; state is managed automatically
-  cloud {
-    organization = "example_corp"
-    ## Required for Terraform Enterprise; Defaults to app.terraform.io for Terraform Cloud
-    hostname = "app.terraform.io"
+  # CI/CD bash commands:
+  # export TF_VAR_aws_access_key=${{ secret.aws_access_key }}
+  # export TF_VAR_aws_secret_key=${{ secret.aws_secret_key }}
 
-    workspaces {
-      tags = ["app"]
-    }
+  // S3 remote state configuration
+  backend "s3" {
+    bucket  = "cert-bucket-rsalus"
+    key     = "terraform.tfstate"
+    region  = "us-east-1"
+    encrypt = true
   }
-  */
-    backend "s3" {
-        key = ""
-        encrypt = true
-    }
 }
 
 ########################################################################
@@ -25,5 +21,3 @@ terraform {
 ########################################################################
 
 data "aws_caller_identity" "current" {}
-
-data "aws_iam_account_alias" "current" {}
